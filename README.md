@@ -1,8 +1,10 @@
 # «Агенты» — пиксельный мультик, полностью посчитанный кодом
 
-[![Кадры из фильма](docs/poster.png)](https://github.com/Qwinty/agents-pixel-film/raw/main/out/film.mp4)
+[![Превью фильма](docs/preview.gif)](https://qwinty.github.io/agents-pixel-film/)
 
-**▶ [Смотреть фильм (MP4, 45 с, 40 МБ)](https://github.com/Qwinty/agents-pixel-film/raw/main/out/film.mp4)**
+**▶ [Смотреть фильм](https://qwinty.github.io/agents-pixel-film/)** ·
+[Live-плеер](https://qwinty.github.io/agents-pixel-film/player/) — тот же фильм, посчитанный прямо в браузере ·
+[MP4, 40 МБ](https://github.com/Qwinty/agents-pixel-film/raw/main/out/film.mp4)
 
 45 секунд, 1920×1080, 30 fps. Ночь, дедлайн в 06:00. Герой канала
 [Pixel by Pixel](https://t.me/p_by_p) запускает четырёх AI-агентов, те устраивают в комнате

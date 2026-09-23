@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Агенты — пиксельный мультик</title>
+<meta name="description" content="45-секундный пиксельный мультик, в котором каждый кадр и каждый звук посчитан кодом.">
+<meta property="og:title" content="«Агенты» — пиксельный мультик, посчитанный кодом">
+<meta property="og:image" content="docs/preview.gif">
+<style>
+  :root { --bg: #0b0d18; --panel: #151a2c; --text: #e8f0ff; --dim: #7d8aa8; --accent: #7dff9a; }
+  * { box-sizing: border-box; }
+  body { margin: 0; min-height: 100vh; background: var(--bg); color: var(--text);
+         font: 15px/1.5 ui-monospace, SFMono-Regular, Consolas, monospace; display: grid; place-items: center; padding: 16px; }
+  main { width: min(100%, 1280px); }
+  h1 { font-size: 20px; margin: 0 0 4px; }
+  p { margin: 0 0 14px; color: var(--dim); }
+  video { display: block; width: 100%; aspect-ratio: 16 / 9; background: #000; border-radius: 6px; image-rendering: pixelated; }
+  nav { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 12px; }
+  a { color: var(--accent); }
+  nav a { background: var(--panel); padding: 8px 12px; border-radius: 6px; text-decoration: none; }
+  nav a:hover { outline: 1px solid var(--accent); }
+</style>
+</head>
+<body>
+<main>
+  <h1>«Агенты»</h1>
+  <p>45 секунд, 1920×1080. Каждый кадр и каждый звук посчитан кодом: без видеоредактора, генерации картинок и сэмплов.</p>
+  <video src="out/film.mp4" controls playsinline preload="metadata"></video>
+  <nav>
+    <a href="player/">▶ Live-плеер: фильм считается прямо в браузере</a>
+    <a href="https://github.com/Qwinty/agents-pixel-film">Код на GitHub</a>
+    <a href="https://t.me/p_by_p">Pixel by Pixel</a>
+  </nav>
+</main>
+</body>
+</html>
