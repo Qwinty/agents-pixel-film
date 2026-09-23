@@ -17,6 +17,9 @@
 //   bar 21       dawn: pad, birds
 //   bar 22       ping → thin pad → "uh-oh" → hard cut to silence
 //   bars 23–24   the eye, the QR, the last chord ringing out to 45.000
+//
+// The narrator (src/narration.js, src/audio/voiceover.js) is mixed on top in master(): the music
+// ducks under each line, and the voice may speak into the blackout, never into the cut to black.
 
 import { CUES, BEAT, BAR, b, DURATION, BOTS } from '../timeline.js';
 import { createMix, makeReverb, makeDelay, limiter, dbToGain, clamp, lerp, rng, TAU } from './synth.js';
@@ -571,7 +574,31 @@ export const SILENCE_WINDOWS = [
   [CUES.cutToBlack, CUES.end.eyeOpen],
 ];
 
-function master(mix) {
+const VO_GAIN = 1.0;
+const VO_DUCK = dbToGain(-10);   // music level under the narrator
+const VO_ATTACK = 0.035;         // s: music is already down when the first consonant lands
+const VO_RELEASE = 0.22;         // s: and swells back after the last word
+
+/** Gain curve for the music: 1 in the clear, VO_DUCK while the narrator speaks. */
+function voiceDuck(spans, sr, n) {
+  const on = new Uint8Array(n);
+  for (const [t0, t1] of spans) on.fill(1, Math.max(0, Math.round((t0 - VO_ATTACK * 2) * sr)), Math.min(n, Math.round((t1 + 0.08) * sr)));
+  const aC = 1 - Math.exp(-1 / (VO_ATTACK * sr)), rC = 1 - Math.exp(-1 / (VO_RELEASE * sr));
+  const g = new Float32Array(n);
+  let x = 1;
+  for (let i = 0; i < n; i++) {
+    const target = on[i] ? VO_DUCK : 1;
+    x += (target - x) * (target < x ? aC : rC);
+    g[i] = x;
+  }
+  return g;
+}
+
+/**
+ * The master bus: music (+ sends, kick duck, hard cuts), then the narration on top, then the limiter.
+ * @param vo  null, or { voice: Float32Array(n), spans } from src/audio/voiceover.js
+ */
+function master(mix, vo = null) {
   const { sr, n } = mix;
 
   // sidechain-ish duck: pads and arps dip under every kick
@@ -617,9 +644,8 @@ function master(mix) {
     R[i] = (dryR + dr * DLY_WET + wr * REV_WET) * MASTER_GAIN;
   }
 
-  limiter(L, R, sr, { ceiling: dbToGain(-2.3), lookahead: 0.006, release: 0.18 });
-
-  // hard cuts → exact zeros, with a sub-2 ms taper just before so the cut has no DC pop
+  // hard cuts → exact zeros, with a sub-2 ms taper just before so the cut has no DC pop.
+  // Done on the music alone: the narrator may speak into the blackout.
   for (const [t0, t1] of SILENCE_WINDOWS) {
     const i0 = Math.round(t0 * sr), i1 = Math.round(t1 * sr);
     const f = Math.round(CUT_FADE * sr);
@@ -632,6 +658,19 @@ function master(mix) {
     L.fill(0, Math.max(0, i0), Math.min(n, i1));
     R.fill(0, Math.max(0, i0), Math.min(n, i1));
   }
+
+  if (vo) {
+    // the music steps back under every line and comes back up after it
+    const duck = voiceDuck(vo.spans, sr, n);
+    for (let i = 0; i < n; i++) {
+      const v = vo.voice[i] * VO_GAIN;
+      L[i] = L[i] * duck[i] + v;
+      R[i] = R[i] * duck[i] + v;
+    }
+  }
+
+  // the limiter only ever multiplies, so the exact zeros above survive it
+  limiter(L, R, sr, { ceiling: dbToGain(-2.3), lookahead: 0.006, release: 0.18 });
 
   // final fade to silence at exactly DURATION
   const f = Math.round(FADE_OUT * sr);
@@ -648,12 +687,13 @@ function master(mix) {
 /**
  * Render the complete soundtrack.
  * @param {number} sampleRate
+ * @param {object|null} vo  the narration bus (src/audio/voiceover.js renderVoice), or null for music only
  * @returns {{left: Float32Array, right: Float32Array}} exactly DURATION seconds of stereo audio
  */
-export function renderAudio(sampleRate = 48000) {
+export function renderAudio(sampleRate = 48000, vo = null) {
   const mix = createMix(sampleRate, DURATION);
   buildScore(mix);
-  return master(mix);
+  return master(mix, vo);
 }
 
 export { DURATION };

@@ -2,11 +2,15 @@
   "name": "agents-pixel-film",
   "version": "1.0.0",
   "private": true,
-  "description": "«Агенты» — 45-second pixel-art film for Pixel by Pixel (@p_by_p). Every frame and every sound is computed by code.",
+  "description": "Agents — a 45-second pixel-art film for Pixel by Pixel (@p_by_p). Every frame and all music and sound effects are computed by code; the English narration is ElevenLabs TTS with burned-in pixel subtitles. English (main, narrated) and Russian (music only) versions.",
   "type": "module",
   "scripts": {
     "build": "node tools/build.js",
+    "build:ru": "node tools/build.js --lang ru",
+    "build:all": "node tools/build.js && node tools/build.js --lang ru",
     "audio": "node src/audio/render.js",
+    "audio:music": "node src/audio/render.js --no-voice",
+    "voice": "node tools/voice.js",
     "frame": "node tools/frame.js",
     "sheet": "node tools/contact.js",
     "qr": "uv run --with opencv-python --with numpy python tools/qr_check.py out/film.mp4"

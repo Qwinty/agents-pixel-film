@@ -1,9 +1,12 @@
 // Render worker: receives { id, t, w, h } and posts back { id, buf } (transferred RGB frame).
-import { parentPort } from 'node:worker_threads';
-import { loadAssets } from '../src/assets/load-node.js';
+import { parentPort, workerData } from 'node:worker_threads';
+import { loadAssets, loadSubtitles } from '../src/assets/load-node.js';
 import { renderFrameAt } from '../src/film.js';
+import { setLang, DEFAULT_LANG } from '../src/lang.js';
 
 loadAssets();
+setLang(workerData?.lang ?? DEFAULT_LANG);
+if (workerData?.subs) loadSubtitles(workerData.lang ?? DEFAULT_LANG);
 parentPort.on('message', (m) => {
   if (m === 'exit') process.exit(0);
   try {

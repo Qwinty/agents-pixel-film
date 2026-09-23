@@ -1,36 +1,77 @@
 <!doctype html>
-<html lang="ru">
+<html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Агенты — пиксельный мультик</title>
-<meta name="description" content="45-секундный пиксельный мультик, в котором каждый кадр и каждый звук посчитан кодом.">
-<meta property="og:title" content="«Агенты» — пиксельный мультик, посчитанный кодом">
-<meta property="og:image" content="docs/preview.gif">
+<title>Agents — a pixel-art film</title>
+<meta name="description" content="A 45-second pixel-art film where every frame, the music and every sound effect are computed by code. English version with narration and pixel subtitles, Russian version with music only.">
+<meta property="og:title" content="Agents — a pixel-art film computed by code">
+<meta property="og:image" content="docs/poster.png">
 <style>
   :root { --bg: #0b0d18; --panel: #151a2c; --text: #e8f0ff; --dim: #7d8aa8; --accent: #7dff9a; }
   * { box-sizing: border-box; }
   body { margin: 0; min-height: 100vh; background: var(--bg); color: var(--text);
          font: 15px/1.5 ui-monospace, SFMono-Regular, Consolas, monospace; display: grid; place-items: center; padding: 16px; }
   main { width: min(100%, 1280px); }
-  h1 { font-size: 20px; margin: 0 0 4px; }
+  header { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; flex-wrap: wrap; margin: 0 0 4px; }
+  h1 { font-size: 20px; margin: 0; }
   p { margin: 0 0 14px; color: var(--dim); }
   video { display: block; width: 100%; aspect-ratio: 16 / 9; background: #000; border-radius: 6px; image-rendering: pixelated; }
   nav { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 12px; }
   a { color: var(--accent); }
   nav a { background: var(--panel); padding: 8px 12px; border-radius: 6px; text-decoration: none; }
   nav a:hover { outline: 1px solid var(--accent); }
+  .lang { margin: 0; gap: 6px; }
+  .lang a { padding: 4px 10px; color: var(--dim); }
+  .lang a[aria-current="true"] { color: var(--accent); outline: 1px solid var(--accent); }
 </style>
 </head>
 <body>
 <main>
-  <h1>«Агенты»</h1>
-  <p>45 секунд, 1920×1080. Каждый кадр и каждый звук посчитан кодом: без видеоредактора, генерации картинок и сэмплов.</p>
-  <video src="out/film.mp4" controls playsinline preload="metadata"></video>
+  <header>
+    <h1 data-t="title">Agents</h1>
+    <nav class="lang" aria-label="Language">
+      <a href="#en" hreflang="en" lang="en">English</a>
+      <a href="#ru" hreflang="ru" lang="ru">Русский</a>
+    </nav>
+  </header>
+  <p data-t="lead">45 seconds, 1920×1080. Every frame, the music and every sound effect are computed by code: no video editor, no image generation, no samples. The narrator's voice is ElevenLabs text-to-speech, with pixel subtitles.</p>
+  <video src="out/film.mp4" controls playsinline preload="metadata" poster="docs/poster.png"></video>
   <nav>
-    <a href="https://github.com/Qwinty/agents-pixel-film">Код на GitHub</a>
+    <a href="https://github.com/Qwinty/agents-pixel-film" data-t="code">Code on GitHub</a>
+    <a href="out/film.mp4" download data-t="mp4">Download MP4</a>
     <a href="https://t.me/p_by_p">Pixel by Pixel</a>
   </nav>
 </main>
+<script>
+  const T = {
+    en: {
+      title: 'Agents',
+      lead: '45 seconds, 1920×1080. Every frame, the music and every sound effect are computed by code: no video editor, no image generation, no samples. The narrator’s voice is ElevenLabs text-to-speech, with pixel subtitles.',
+      code: 'Code on GitHub', mp4: 'Download MP4',
+      video: 'out/film.mp4', poster: 'docs/poster.png', doc: 'Agents — a pixel-art film',
+    },
+    ru: {
+      title: '«Агенты»',
+      lead: '45 секунд, 1920×1080. Каждый кадр, музыка и каждый звуковой эффект посчитаны кодом: без видеоредактора, генерации картинок и сэмплов. Русская версия без озвучки: только музыка и звуки.',
+      code: 'Код на GitHub', mp4: 'Скачать MP4',
+      video: 'out/film.ru.mp4', poster: 'docs/poster.ru.png', doc: 'Агенты — пиксельный мультик',
+    },
+  };
+  const video = document.querySelector('video');
+  const mp4 = document.querySelector('[data-t="mp4"]');
+  function apply() {
+    const lang = location.hash === '#ru' ? 'ru' : 'en';
+    const t = T[lang];
+    document.documentElement.lang = lang;
+    document.title = t.doc;
+    for (const el of document.querySelectorAll('[data-t]')) el.textContent = t[el.dataset.t];
+    for (const a of document.querySelectorAll('.lang a')) a.setAttribute('aria-current', String(a.hash === '#' + lang));
+    if (video.getAttribute('src') !== t.video) { video.pause(); video.setAttribute('src', t.video); video.poster = t.poster; video.load(); }
+    mp4.setAttribute('href', t.video);
+  }
+  addEventListener('hashchange', apply);
+  apply();
+</script>
 </body>
 </html>

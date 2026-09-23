@@ -1,9 +1,11 @@
 // A small worker_threads pool: render(t, w, h) → Promise<Uint8Array RGB>. Frames are independent,
-// so any number render in parallel and in any order.
+// so any number render in parallel and in any order. `lang` picks the on-screen language,
+// `subs` burns in that language's narration subtitles.
 import { Worker } from 'node:worker_threads';
 import os from 'node:os';
+import { DEFAULT_LANG } from '../src/lang.js';
 
-export function createPool(n = Math.max(1, os.cpus().length - 1)) {
+export function createPool(n = Math.max(1, os.cpus().length - 1), { lang = DEFAULT_LANG, subs = false } = {}) {
   const url = new URL('./worker.js', import.meta.url);
   const workers = [];
   const idle = [];
@@ -19,7 +21,7 @@ export function createPool(n = Math.max(1, os.cpus().length - 1)) {
     }
   };
   for (let i = 0; i < n; i++) {
-    const w = new Worker(url);
+    const w = new Worker(url, { workerData: { lang, subs } });
     w.on('message', (m) => {
       const job = pending.get(m.id);
       pending.delete(m.id);

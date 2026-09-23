@@ -1,9 +1,14 @@
 node_modules/
 .claude/
 
-# build outputs: keep only the final film
+# secrets: the ElevenLabs key lives here
+.env
+.env.*
+
+# build outputs: keep only the two final films (English = main, Russian)
 out/*
 !out/film.mp4
+!out/film.ru.mp4
 
 # reference footage stays local; only in-frame assets are published
 footage/*
@@ -14,3 +19,6 @@ footage/*
 # HTML player: kept locally, not published
 player/
 tools/serve.js
+
+# voice auditions: local only (tools/voice.js --dir)
+voice-audition/

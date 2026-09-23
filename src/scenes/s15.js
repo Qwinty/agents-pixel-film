@@ -1,6 +1,6 @@
 // Shot 15 (bar 22, 39.375–41.250) — "Пинг!"
 // Static wide: the team on the sill (backs to us) against the sunrise, the monitor below them.
-// b(22,1) ping: the screen flashes, a yellow sticker "v2 · ДЕДЛАЙН 08:00" slides up on it, rings pulse.
+// b(22,1) ping: the screen flashes, a yellow sticker "v2 · DEADLINE 08:00" slides up on it, rings pulse.
 // b(22,2)..b(22,3) headTurn: one by one (tester → barista → coder → designer) the bots slowly turn
 //   around and stare at the hero.
 // b(22,3) heroEyes: the hero turns around too — round eyes, down at the screen, a bead of sweat.
@@ -10,6 +10,7 @@ import { ease, clamp } from '../engine/util.js';
 import { mix } from '../engine/color.js';
 import { TAG_MONITOR } from '../assets/room.js';
 import { sillScene, SILL } from './dawn_lib.js';
+import { tr } from '../lang.js';
 
 const T_P = CUES.ping, T_T = CUES.headTurn, T_E = CUES.heroEyes, T_B = CUES.cutToBlack;
 const BLACK_FRAME = new Uint8Array(W * H * 3);
@@ -91,7 +92,7 @@ function v2Sticker(a, t) {
     if (white) return;
     drawText(a, FONTS.tiny, 'v2', NX + 3, ny + 4, 0x2a3a6a);
     a.put(NX + 11, ny + 6, 0x2a2a3a);
-    drawText(a, FONTS.tiny, 'ДЕДЛАЙН', NX + 14, ny + 4, 0xc0282a);
+    drawText(a, FONTS.tiny, tr('deadline'), NX + 14, ny + 4, 0xc0282a);
     const tw = textWidth(FONTS.big, '08:00');
     drawText(a, FONTS.big, '08:00', NX + Math.round((NW - tw) / 2), ny + 11, 0xc0282a);
   }));

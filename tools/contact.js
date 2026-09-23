@@ -4,6 +4,8 @@
 //   node tools/contact.js film            → only the film sheet
 //   options: --step 0.5  (beats between tiles, default 0.5 = every 8th note)
 //            --cols 4    (tiles per row)
+//            --lang ru   (on-screen language, default en)
+//            --subs      (burn in the narration subtitles, as in the film)
 // Shot tiles are sampled one frame after each grid point, so they show the state right after
 // every hit. Tiles are rendered at 960×540 and box-downsampled to 480×270; film tiles 320×180.
 import fs from 'node:fs';
@@ -15,17 +17,19 @@ import { FONTS } from '../src/engine/font.js';
 import { createPool } from './pool.js';
 
 const args = process.argv.slice(2);
-let step = 0.5, cols = 4;
+let step = 0.5, cols = 4, lang = 'en', subs = false;
 const which = [];
 for (let i = 0; i < args.length; i++) {
   if (args[i] === '--step') { step = Number(args[++i]); continue; }
   if (args[i] === '--cols') { cols = Number(args[++i]); continue; }
+  if (args[i] === '--lang') { lang = args[++i]; continue; }
+  if (args[i] === '--subs') { subs = true; continue; }
   which.push(args[i]);
 }
 const doAll = which.length === 0;
 const outDir = path.join(ROOT, 'out/sheets');
 fs.mkdirSync(outDir, { recursive: true });
-const pool = createPool();
+const pool = createPool(undefined, { lang, subs });
 
 function downsample(src, sw, sh, f) {
   const dw = sw / f, dh = sh / f, out = new Uint8Array(dw * dh * 3);

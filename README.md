@@ -1,59 +1,96 @@
-# «Агенты» — пиксельный мультик, полностью посчитанный кодом
+# Agents — a pixel-art film computed entirely by code
 
-[![Кадры из фильма](docs/poster.png)](https://qwinty.github.io/agents-pixel-film/)
+[Русская версия](README.ru.md)
 
-**▶ [Смотреть фильм](https://qwinty.github.io/agents-pixel-film/)** ·
-[MP4, 40 МБ](https://github.com/Qwinty/agents-pixel-film/raw/main/out/film.mp4)
+[![Frames from the film](docs/poster.png)](https://qwinty.github.io/agents-pixel-film/)
 
-45 секунд, 1920×1080, 30 fps. Ночь, дедлайн в 06:00. Герой канала
-[Pixel by Pixel](https://t.me/p_by_p) запускает четырёх AI-агентов, те устраивают в комнате
-хаос цепной реакцией, а в темноте после замыкания герой начинает ими дирижировать.
+**▶ [Watch the film](https://qwinty.github.io/agents-pixel-film/)** ·
+[MP4, English, 39 MB](https://github.com/Qwinty/agents-pixel-film/raw/main/out/film.mp4) ·
+[MP4, Russian, music only](https://github.com/Qwinty/agents-pixel-film/raw/main/out/film.ru.mp4)
 
-Каждый кадр и каждый звук считает программа. Здесь нет видеоредактора, генерации картинок
-и сэмплов. Из готовых файлов в кадр попадают только спрайт героя 24×45
-(`footage/character/`) и логотип с QR (`footage/brand/`). Всё остальное нарисовано кодом
-пиксель за пикселем в той же сетке.
+45 seconds, 1920×1080, 30 fps. Night, the deadline is at 06:00. The hero of the
+[Pixel by Pixel](https://t.me/p_by_p) channel launches four AI agents. They wreck the room in a
+chain reaction, and in the dark after the short circuit the hero starts conducting them.
 
-## Сборка
+Every frame, the music and every sound effect are computed by the program. There is no video
+editor, no image generation and no samples. The only ready-made files in the frame are the 24×45
+hero sprite (`footage/character/`) and the logo with the QR code (`footage/brand/`). Everything
+else is drawn by code, pixel by pixel, on the same grid. The one exception is the narrator's
+voice in the English version: it is ElevenLabs text-to-speech.
+
+## Versions
+
+| | File | Narration | Subtitles |
+|---|---|---|---|
+| **English** (main) | `out/film.mp4` | English, voice Lily | pixel, burned in |
+| Russian | `out/film.ru.mp4` | none: music and effects only | none |
+
+Apart from the subtitles, the picture of the two versions differs only in the word on two
+deadline stickers (DEADLINE / ДЕДЛАЙН). All other on-screen text is English in both.
+
+## Build
 
 ```bash
-npm run build
+npm run build        # English → out/film.mp4
+npm run build:ru     # Russian, music only → out/film.ru.mp4
 ```
 
-Нужны Node ≥ 20 и `ffmpeg` в PATH, npm-зависимостей нет. Команда синтезирует звук, считает
-1350 кадров параллельно и собирает `out/film.mp4`. На 16 потоках это занимает около 40 секунд.
-Остальные команды описаны в [docs/BUILD.md](docs/BUILD.md).
+You need Node ≥ 20 and `ffmpeg` on PATH; there are no npm dependencies. The command synthesizes
+the score, mixes in the narration, renders 1350 frames in parallel (with the subtitles) and
+muxes the MP4. On 16 threads one version builds in under a minute. The narration take is
+committed in `voice/`, so the build needs no API key. Other commands are in
+[docs/BUILD.md](docs/BUILD.md).
 
-## Как это сделано
+## How it works
 
-- **Кадр — чистая функция времени.** Каждая из 16 сцен — это `render(t)`. Состояние комнаты
-  (часы, дождь, кофе, краска, рассвет) тоже вычисляется из `t`. Поэтому кадры можно считать
-  в любом порядке и параллельно, а результат всегда одинаковый.
-- **Холст 320×180 арт-пикселей, масштаб ×6.** Свет, дизеринг Байера и камера с зумом
-  работают в одной сетке с героем.
-- **Одна музыкальная сетка на картинку и звук.** Склейки, удары и ноты стоят в 128 BPM.
-  У каждого бота своя нота, вместе они дают аккорд рассвета.
-- **Звук синтезирует свой DSP-код:** осцилляторы, фильтры, реверб и лимитер.
+- **A frame is a pure function of time.** Each of the 16 shots is a `render(t)`. The state of the
+  room (clock, rain, coffee, paint, dawn) is computed from `t` as well. So frames can be rendered
+  in any order and in parallel, and the result is always the same.
+- **A 320×180 art-pixel canvas, scaled ×6.** Lighting, Bayer dithering and the zooming camera all
+  work on the hero's pixel grid.
+- **One musical grid for picture and sound.** Cuts, hits and notes sit on a 128 BPM grid. Each
+  bot has its own note, and together they make the dawn chord.
+- **The sound is our own DSP code:** oscillators, filters, reverb and a limiter.
+- **The narration sits on the same grid.** A lively narrator reacts to the chaos in 14 short
+  lines, each with its own delivery: nervous, excited, laughing, shouting, whispering, gasping.
+  It is one ElevenLabs v3 take; forced alignment gives the time of every word. The code cuts the
+  take into lines and puts each exactly on its cue. A line too long for its slot gets its pauses
+  tightened or is sped up slightly with the pitch kept. The music ducks under the voice. The
+  Enter slam, the four spawn notes, the tester's taps and the discovery in the dark stay voice-free.
+- **Pixel subtitles.** The English film has subtitles in the film's own 5×7 pixel font, on the
+  hero's pixel grid. Every word appears the moment it is heard. Bot names are in the bot's color,
+  the whisper is dimmer, the shout shakes, and the sign-off is in the colors of the logo.
 
-Подробнее:
-- [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) — код и принятые решения;
-- [docs/SCENES.md](docs/SCENES.md) — все 16 сцен;
-- [docs/RESULTS.md](docs/RESULTS.md) — проверки, что получилось и что нет.
+More:
+- [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) — the code and the decisions behind it;
+- [docs/SCENES.md](docs/SCENES.md) — all 16 shots and the narration script;
+- [docs/RESULTS.md](docs/RESULTS.md) — checks, what worked and what didn't.
 
-## Сессия Claude Code
+## Narration
 
-Фильм сделан за одну сессию Claude Code по заданию [PROMPT_B_nogen.md](PROMPT_B_nogen.md).
-Главный агент написал движок, декорацию, героя, пайплайн и первые кадры. Саундтрек и
-четыре группы кадров делали параллельные субагенты.
+- Voice: ElevenLabs `eleven_v3`, premade voice Lily. The delivery is set by v3 audio tags
+  (`[nervous]`, `[laughs]`, `[whispers]`…). The Russian version has no narration.
+- The script and its cues are in [src/narration.js](src/narration.js). After editing the text,
+  record a new take with `npm run voice`. It reads `ELEVENLABS_API_KEY` from the environment or
+  from `.env`.
+- Narration generated with [ElevenLabs](https://elevenlabs.io).
+
+## Claude Code session
+
+The film was made in one Claude Code session from the brief
+[PROMPT_B_nogen.md](PROMPT_B_nogen.md) (in Russian). The main agent wrote the engine, the set,
+the hero, the pipeline and the first shots. The soundtrack and four groups of shots were done by
+parallel subagents.
 
 | | |
 |---|---|
-| Время | **1 ч 52 мин**: 1 ч 34 мин до первой версии и 14 мин на правки |
-| Модели | Claude Opus 5.5 (главный агент), Opus 5 и Opus 5.5 (9 субагентов) |
-| API-вызовов | 582 |
-| Токенов | **120.2 млн**: 116.2 млн чтение кэша, 3.0 млн запись в кэш, 1.07 млн output |
-| Стоимость по ценам API | **≈ $69** |
-| Код | ~9.5 тыс. строк JS |
+| Time | **1 h 52 min**: 1 h 34 min to the first version and 14 min of fixes |
+| Models | Claude Opus 5.5 (main agent), Opus 5 and Opus 5.5 (9 subagents) |
+| API calls | 582 |
+| Tokens | **120.2 M**: 116.2 M cache reads, 3.0 M cache writes, 1.07 M output |
+| Cost at API prices | **≈ $69** |
+| Code | ~9.5k lines of JS |
 
-Поэтапное время, токены по каждому субагенту и расчёт стоимости — в
-[docs/SESSION.md](docs/SESSION.md).
+Time per stage, tokens per subagent and the cost calculation are in
+[docs/SESSION.md](docs/SESSION.md). The English version, the narration and the subtitles were
+added later in a separate session; they are not counted in these numbers.

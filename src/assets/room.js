@@ -5,6 +5,7 @@ import { mix, scale } from '../engine/color.js';
 import { hash, clamp, fract, noise1, TAU, bayer } from '../engine/util.js';
 import { FONTS, drawText, textWidth } from '../engine/font.js';
 import { RING } from './brand.js';
+import { tr } from '../lang.js';
 
 export const W = 320, H = 180;
 /** Tag of the monitor body + deadline sticker: the screen's own light does not fall on them. */
@@ -512,7 +513,7 @@ function drawDeadlineSticker(art, st) {
   art.hline(nx, nx + nw - 1, ny, 0xfff2a8);
   art.rect(nx, ny + nh - 2, nw, 2, mix(c, 0xd8a820, 0.45)); // curled bottom edge
   art.put(nx + nw - 1, ny + nh - 1, OUT);
-  drawText(art, FONTS.tiny, 'ДЕДЛАЙН', nx + 3, ny + 4, 0xc0282a);
+  drawText(art, FONTS.tiny, tr('deadline'), nx + Math.floor((nw - textWidth(FONTS.tiny, tr('deadline'))) / 2), ny + 4, 0xc0282a);
   drawText(art, FONTS.tiny, '06:00', nx + 10, ny + 11, 0x2a2a3a);
   art.rect(nx + 15, ny - 2, 8, 3, 0xd8e8f0); // tape
   art.hline(nx + 15, nx + 22, ny - 2, 0xffffff);

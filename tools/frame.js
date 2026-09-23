@@ -1,20 +1,24 @@
 // Render single frames to PNG.
-//   node tools/frame.js 12.5 b5.3 f120 [--size 1920x1080] [--out out/frames]
+//   node tools/frame.js 12.5 b5.3 f120 [--size 1920x1080] [--out out/frames] [--lang en|ru] [--no-subs]
 //   12.5 = seconds, b5.3 = bar 5 beat 3 (+ one frame), f120 = frame 120
+//   Subtitles are burned in as in the film (narrated languages only) unless --no-subs.
 import fs from 'node:fs';
 import path from 'node:path';
-import { loadAssets, ROOT } from '../src/assets/load-node.js';
+import { loadAssets, loadSubtitles, ROOT } from '../src/assets/load-node.js';
 import { renderFrameAt } from '../src/film.js';
 import { writePNG } from '../src/engine/png.js';
 import { b, FPS, frameTime } from '../src/timeline.js';
+import { setLang, DEFAULT_LANG } from '../src/lang.js';
 
 const args = process.argv.slice(2);
-let size = [1920, 1080], outDir = path.join(ROOT, 'out/frames');
+let size = [1920, 1080], outDir = path.join(ROOT, 'out/frames'), lang = DEFAULT_LANG, subs = true;
 const times = [];
 for (let i = 0; i < args.length; i++) {
   const a = args[i];
   if (a === '--size') { size = args[++i].split('x').map(Number); continue; }
   if (a === '--out') { outDir = path.resolve(args[++i]); continue; }
+  if (a === '--lang') { lang = args[++i]; continue; }
+  if (a === '--no-subs') { subs = false; continue; }
   times.push(parseTime(a));
 }
 export function parseTime(a) {
@@ -23,6 +27,8 @@ export function parseTime(a) {
   return Number(a);
 }
 loadAssets();
+setLang(lang);
+if (subs) loadSubtitles(lang);
 fs.mkdirSync(outDir, { recursive: true });
 for (const t of times) {
   const t0 = performance.now();

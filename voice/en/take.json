@@ -1,0 +1,227 @@
+{
+ "lang": "en",
+ "hash": "65adf76e3b3209e4",
+ "voiceId": "pFZP5JQG7iQjIQuC4Bku",
+ "voiceName": "Lily",
+ "model": "eleven_v3",
+ "settings": {
+  "stability": 0.5,
+  "similarity_boost": 0.75
+ },
+ "seed": 4242,
+ "format": "mp3_44100_128",
+ "text": "[nervous] Two a.m., deadline at six.\n\n[excited] Barista!\n\nCoder!\n\nDesigner!\n\nTester!\n\n[mischievously] What could possibly go wrong?\n\n[sarcastic] Helpful.\n\n[laughs] Very helpful.\n\n[shouting] Extremely helpful!\n\n[whispers] Then... silence.\n\n[amazed] They just needed a conductor!\n\n[cheerfully] Six a.m. Deployed!\n\n[gasps] Version two?!\n\n[warmly] Pixel by Pixel.",
+ "spoken": "Two a.m., deadline at six.\nBarista!\nCoder!\nDesigner!\nTester!\nWhat could possibly go wrong?\nHelpful.\nVery helpful.\nExtremely helpful!\nThen... silence.\nThey just needed a conductor!\nSix a.m. Deployed!\nVersion two?!\nPixel by Pixel.",
+ "lines": [
+  {
+   "id": "hook",
+   "text": "Two a.m., deadline at six.",
+   "start": 0.15,
+   "end": 2.12,
+   "words": [
+    0.18,
+    2.08
+   ],
+   "pauses": []
+  },
+  {
+   "id": "barista",
+   "text": "Barista!",
+   "start": 2.5500000000000003,
+   "end": 3.24,
+   "words": [
+    2.56,
+    3.14
+   ],
+   "pauses": []
+  },
+  {
+   "id": "coder",
+   "text": "Coder!",
+   "start": 4.019,
+   "end": 4.61,
+   "words": [
+    4.019,
+    4.54
+   ],
+   "pauses": []
+  },
+  {
+   "id": "designer",
+   "text": "Designer!",
+   "start": 5.3,
+   "end": 6.1000000000000005,
+   "words": [
+    5.3,
+    6.02
+   ],
+   "pauses": []
+  },
+  {
+   "id": "tester",
+   "text": "Tester!",
+   "start": 6.84,
+   "end": 7.59,
+   "words": [
+    6.84,
+    7.5
+   ],
+   "pauses": []
+  },
+  {
+   "id": "wrong",
+   "text": "What could possibly go wrong?",
+   "start": 8.53,
+   "end": 10.58,
+   "words": [
+    8.62,
+    10.54
+   ],
+   "pauses": []
+  },
+  {
+   "id": "helpful1",
+   "text": "Helpful.",
+   "start": 11.59,
+   "end": 12.290000000000001,
+   "words": [
+    11.64,
+    12.26
+   ],
+   "pauses": []
+  },
+  {
+   "id": "helpful2",
+   "text": "Very helpful.",
+   "start": 12.780000000000001,
+   "end": 14.46,
+   "words": [
+    13.56,
+    14.42
+   ],
+   "pauses": [
+    [
+     12.98,
+     13.42
+    ]
+   ]
+  },
+  {
+   "id": "helpful3",
+   "text": "Extremely helpful!",
+   "start": 15.17,
+   "end": 16.82,
+   "words": [
+    15.241,
+    16.78
+   ],
+   "pauses": []
+  },
+  {
+   "id": "silence",
+   "text": "Then... silence.",
+   "start": 17.79,
+   "end": 19.71,
+   "words": [
+    17.82,
+    19.66
+   ],
+   "pauses": [
+    [
+     18.21,
+     18.8
+    ]
+   ]
+  },
+  {
+   "id": "conductor",
+   "text": "They just needed a conductor!",
+   "start": 20.66,
+   "end": 22.52,
+   "words": [
+    20.66,
+    22.46
+   ],
+   "pauses": []
+  },
+  {
+   "id": "deployed",
+   "text": "Six a.m. Deployed!",
+   "start": 23.37,
+   "end": 25.19,
+   "words": [
+    23.46,
+    25.16
+   ],
+   "pauses": [
+    [
+     24.150000000000002,
+     24.45
+    ]
+   ]
+  },
+  {
+   "id": "v2",
+   "text": "Version two?!",
+   "start": 25.740000000000002,
+   "end": 27.5,
+   "words": [
+    26.48,
+    27.48
+   ],
+   "pauses": [
+    [
+     25.89,
+     26.39
+    ]
+   ]
+  },
+  {
+   "id": "outro",
+   "text": "Pixel by Pixel.",
+   "start": 28.44,
+   "end": 29.72,
+   "words": [
+    28.48,
+    29.72
+   ],
+   "pauses": []
+  }
+ ],
+ "words": [
+  {"text":"Two","start":0.18,"end":0.32},
+  {"text":"a.m.,","start":0.42,"end":0.62},
+  {"text":"deadline","start":1.1,"end":1.48},
+  {"text":"at","start":1.5,"end":1.62},
+  {"text":"six.","start":1.74,"end":2.08},
+  {"text":"Barista!","start":2.56,"end":3.14},
+  {"text":"Coder!","start":4.019,"end":4.54},
+  {"text":"Designer!","start":5.3,"end":6.02},
+  {"text":"Tester!","start":6.84,"end":7.5},
+  {"text":"What","start":8.62,"end":8.82},
+  {"text":"could","start":8.9,"end":9.16},
+  {"text":"possibly","start":9.24,"end":9.82},
+  {"text":"go","start":9.9,"end":10.08},
+  {"text":"wrong?","start":10.18,"end":10.54},
+  {"text":"Helpful.","start":11.64,"end":12.26},
+  {"text":"Very","start":13.56,"end":13.88},
+  {"text":"helpful.","start":13.96,"end":14.42},
+  {"text":"Extremely","start":15.241,"end":16.18},
+  {"text":"helpful!","start":16.239,"end":16.78},
+  {"text":"Then...","start":17.82,"end":18.18},
+  {"text":"silence.","start":19.04,"end":19.66},
+  {"text":"They","start":20.66,"end":20.84},
+  {"text":"just","start":20.96,"end":21.28},
+  {"text":"needed","start":21.32,"end":21.58},
+  {"text":"a","start":21.64,"end":21.68},
+  {"text":"conductor!","start":21.72,"end":22.46},
+  {"text":"Six","start":23.46,"end":23.72},
+  {"text":"a.m.","start":23.8,"end":24},
+  {"text":"Deployed!","start":24.48,"end":25.16},
+  {"text":"Version","start":26.48,"end":26.88},
+  {"text":"two?!","start":27.06,"end":27.48},
+  {"text":"Pixel","start":28.48,"end":28.92},
+  {"text":"by","start":29.04,"end":29.24},
+  {"text":"Pixel.","start":29.3,"end":29.72}
+ ]
+}

@@ -18,31 +18,31 @@ export const frameTime = (n) => (n + 0.5) / FPS;
 // Bot identities: color = segment of the logo-eye ring, note = the bot's "voice" (set up at spawn,
 // paid off in the dark, then each voice becomes a layer of the track; together = the dawn chord C-E-G-C).
 export const BOTS = {
-  barista:  { name: 'Бариста',  color: 0xffab1f, note: 'C3', midi: 48, voice: 'triangle bass', layer: 'bass' },
-  coder:    { name: 'Кодер',    color: 0x4079c9, note: 'E4', midi: 64, voice: 'square/pulse arpeggio', layer: 'arp' },
-  designer: { name: 'Дизайнер', color: 0xce46a0, note: 'G4', midi: 67, voice: 'soft lead with vibrato', layer: 'melody' },
-  tester:   { name: 'Тестер',   color: 0x48be37, note: 'C6', midi: 84, voice: 'metallic tink / drum kit', layer: 'drums' },
+  barista:  { name: 'Barista',  color: 0xffab1f, note: 'C3', midi: 48, voice: 'triangle bass', layer: 'bass' },
+  coder:    { name: 'Coder',    color: 0x4079c9, note: 'E4', midi: 64, voice: 'square/pulse arpeggio', layer: 'arp' },
+  designer: { name: 'Designer', color: 0xce46a0, note: 'G4', midi: 67, voice: 'soft lead with vibrato', layer: 'melody' },
+  tester:   { name: 'Tester',   color: 0x48be37, note: 'C6', midi: 84, voice: 'metallic tink / drum kit', layer: 'drums' },
 };
 export const SPAWN_ORDER = ['barista', 'coder', 'designer', 'tester'];
 
 // Shot list — [startBar, endBar) on the grid. Times in seconds are derived.
 export const SHOTS = [
-  { id: 1, key: 's01', title: 'Хук: монитор и дедлайн', bars: [1, 2] },
-  { id: 2, key: 's02', title: 'Enter и спавн агентов', bars: [2, 4] },
-  { id: 3, key: 's03', title: 'Боты отдают честь, разлёт', bars: [4, 5] },
-  { id: 4, key: 's04', title: 'Кодер: лавина кода', bars: [5, 6] },
-  { id: 5, key: 's05', title: 'Бариста: кофейная река', bars: [6, 7] },
-  { id: 6, key: 's06', title: 'Дизайнер: всё в розовый', bars: [7, 8] },
-  { id: 7, key: 's07', title: 'Тестер: удлинитель', bars: [8, 9] },
-  { id: 8, key: 's08', title: 'Хаос', bars: [9, 11] },
-  { id: 9, key: 's09', title: 'Замыкание', bars: [11, 12] },
-  { id: 10, key: 's10', title: 'Догадка', bars: [12, 14] },
-  { id: 11, key: 's11', title: 'Дирижёр', bars: [14, 18] },
-  { id: 12, key: 's12', title: 'Монтаж: всё сходится', bars: [18, 20] },
-  { id: 13, key: 's13', title: '06:00 — deployed, ракета', bars: [20, 21] },
-  { id: 14, key: 's14', title: 'Рассвет на подоконнике', bars: [21, 22] },
-  { id: 15, key: 's15', title: 'Пинг: v2', bars: [22, 23] },
-  { id: 16, key: 's16', title: 'Концовка: глаз и QR', bars: [23, 25] },
+  { id: 1, key: 's01', title: 'Hook: monitor and deadline', bars: [1, 2] },
+  { id: 2, key: 's02', title: 'Enter and the agents spawn', bars: [2, 4] },
+  { id: 3, key: 's03', title: 'Bots salute and scatter', bars: [4, 5] },
+  { id: 4, key: 's04', title: 'Coder: avalanche of code', bars: [5, 6] },
+  { id: 5, key: 's05', title: 'Barista: river of coffee', bars: [6, 7] },
+  { id: 6, key: 's06', title: 'Designer: everything pink', bars: [7, 8] },
+  { id: 7, key: 's07', title: 'Tester: the power strip', bars: [8, 9] },
+  { id: 8, key: 's08', title: 'Chaos', bars: [9, 11] },
+  { id: 9, key: 's09', title: 'Short circuit', bars: [11, 12] },
+  { id: 10, key: 's10', title: 'The discovery', bars: [12, 14] },
+  { id: 11, key: 's11', title: 'The conductor', bars: [14, 18] },
+  { id: 12, key: 's12', title: 'Montage: it all comes together', bars: [18, 20] },
+  { id: 13, key: 's13', title: '06:00 — deployed, the rocket', bars: [20, 21] },
+  { id: 14, key: 's14', title: 'Dawn on the windowsill', bars: [21, 22] },
+  { id: 15, key: 's15', title: 'Ping: v2', bars: [22, 23] },
+  { id: 16, key: 's16', title: 'Ending: the eye and the QR', bars: [23, 25] },
 ].map((s) => ({ ...s, start: b(s.bars[0]), end: b(s.bars[1]) }));
 
 // ---------------------------------------------------------------------------------------------
@@ -130,7 +130,7 @@ export const CUES = {
   rocketOut: b(20, 4),
   dawn: b(21, 1),                  // windowsill, sunrise, rocket trail, birds
   // VI. Button
-  ping: b(22, 1),                  // "Ping!" new sticky: v2 · ДЕДЛАЙН 08:00
+  ping: b(22, 1),                  // "Ping!" new sticky: v2 · DEADLINE 08:00
   headTurn: b(22, 2),              // four bots slowly turn their heads to the hero (b(22,2)..b(22,3))
   heroEyes: b(22, 3),              // hero's eyes go round
   cutToBlack: b(22, 4),            // hard cut to black, music stops dead (silence to b(23,1))
