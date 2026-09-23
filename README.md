@@ -3,7 +3,6 @@
 [![Превью фильма](docs/preview.gif)](https://qwinty.github.io/agents-pixel-film/)
 
 **▶ [Смотреть фильм](https://qwinty.github.io/agents-pixel-film/)** ·
-[Live-плеер](https://qwinty.github.io/agents-pixel-film/player/) — тот же фильм, посчитанный прямо в браузере ·
 [MP4, 40 МБ](https://github.com/Qwinty/agents-pixel-film/raw/main/out/film.mp4)
 
 45 секунд, 1920×1080, 30 fps. Ночь, дедлайн в 06:00. Герой канала
@@ -23,7 +22,7 @@ npm run build
 
 Нужны Node ≥ 20 и `ffmpeg` в PATH, npm-зависимостей нет. Команда синтезирует звук, считает
 1350 кадров параллельно и собирает `out/film.mp4`. На 16 потоках это занимает около 40 секунд.
-Остальные команды и HTML-плеер описаны в [docs/BUILD.md](docs/BUILD.md).
+Остальные команды описаны в [docs/BUILD.md](docs/BUILD.md).
 
 ## Как это сделано
 
@@ -35,7 +34,6 @@ npm run build
 - **Одна музыкальная сетка на картинку и звук.** Склейки, удары и ноты стоят в 128 BPM.
   У каждого бота своя нота, вместе они дают аккорд рассвета.
 - **Звук синтезирует свой DSP-код:** осцилляторы, фильтры, реверб и лимитер.
-- **HTML-плеер** считает тот же фильм прямо в браузере тем же кодом.
 
 Подробнее:
 - [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) — код и принятые решения;
