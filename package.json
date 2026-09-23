@@ -9,8 +9,7 @@
     "audio": "node src/audio/render.js",
     "frame": "node tools/frame.js",
     "sheet": "node tools/contact.js",
-    "qr": "uv run --with opencv-python --with numpy python tools/qr_check.py out/film.mp4",
-    "player": "node tools/serve.js 8080"
+    "qr": "uv run --with opencv-python --with numpy python tools/qr_check.py out/film.mp4"
   },
   "engines": {
     "node": ">=20"

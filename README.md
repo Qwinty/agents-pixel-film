@@ -1,6 +1,6 @@
 # «Агенты» — пиксельный мультик, полностью посчитанный кодом
 
-[![Превью фильма](docs/preview.gif)](https://qwinty.github.io/agents-pixel-film/)
+[![Кадры из фильма](docs/poster.png)](https://qwinty.github.io/agents-pixel-film/)
 
 **▶ [Смотреть фильм](https://qwinty.github.io/agents-pixel-film/)** ·
 [MP4, 40 МБ](https://github.com/Qwinty/agents-pixel-film/raw/main/out/film.mp4)

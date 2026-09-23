@@ -10,3 +10,7 @@ footage/*
 !footage/README.md
 !footage/character/
 !footage/brand/
+
+# HTML player: kept locally, not published
+player/
+tools/serve.js

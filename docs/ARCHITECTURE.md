@@ -23,7 +23,7 @@ src/
                      лампа, удлинитель, кофейная река), экран монитора в режимах terminal / code / glitch / boot /
                      progress / deployed
     brand.js         QR 25×25 и логотип-глаз 70×39, перенесённые в арт-сетку из footage/brand
-    load-node.js     загрузка ассетов в Node (в браузере — player/assets.js)
+    load-node.js     загрузка ассетов в Node
   scenes/
     s01.js … s16.js  16 кадров; каждый — чистая функция render(t) → { img, w, h, cam }
     common.js        общие инструменты кадра: composeRoom, lightRoom, камера, огибающие, IK рук, эффекты
@@ -36,8 +36,7 @@ src/
     voices.js        инструменты и все звуковые эффекты
     score.js         партитура: всё расставлено по CUES, мастер-шина
     render.js        Node-обёртка → out/audio.wav
-tools/  build.js worker.js pool.js contact.js frame.js mp4sheet.js diffscan.js qr_check.py serve.js
-player/ index.html player.js frame-worker.js audio-worker.js assets.js
+tools/  build.js worker.js pool.js contact.js frame.js mp4sheet.js diffscan.js qr_check.py
 ```
 
 Детерминизм обеспечен так:
