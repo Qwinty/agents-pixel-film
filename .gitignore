@@ -1,0 +1,12 @@
+node_modules/
+.claude/
+
+# build outputs: keep only the final film
+out/*
+!out/film.mp4
+
+# reference footage stays local; only in-frame assets are published
+footage/*
+!footage/README.md
+!footage/character/
+!footage/brand/

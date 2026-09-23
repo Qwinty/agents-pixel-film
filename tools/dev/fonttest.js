@@ -1,0 +1,27 @@
+import { Art } from '../../src/engine/art.js';
+import { FONTS, drawText } from '../../src/engine/font.js';
+import { light } from '../../src/engine/light.js';
+import { shoot } from '../../src/engine/camera.js';
+import { writePNG } from '../../src/engine/png.js';
+
+const art = new Art(320, 180, 0x101828);
+const W = 0xe8f0ff, Y = 0xffe066, G = 0x7dff9a;
+let y = 4;
+drawText(art, FONTS.tiny, '> spawn agents_', 4, y, G); y += 9;
+drawText(art, FONTS.tiny, 'ДЕДЛАЙН 06:00', 4, y, Y); y += 9;
+drawText(art, FONTS.tiny, 'v2 · ДЕДЛАЙН 08:00', 4, y, Y); y += 9;
+drawText(art, FONTS.tiny, 'deployed ✓  12%  04:30 05:59', 4, y, W); y += 9;
+drawText(art, FONTS.tiny, 'abcdefghijklm nopqrstuvwxyz', 4, y, W); y += 9;
+drawText(art, FONTS.tiny, 'ABCDEFGHIJKLM NOPQRSTUVWXYZ', 4, y, W); y += 9;
+drawText(art, FONTS.tiny, '0123456789 {}();=<>/*+-[]!?', 4, y, W); y += 9;
+drawText(art, FONTS.tiny, 'git push --force && deploy', 4, y, W); y += 9;
+drawText(art, FONTS.tiny, 't.me/p_by_p', 4, y, W); y += 12;
+drawText(art, FONTS.big, 'deployed ✓', 4, y, G); y += 12;
+drawText(art, FONTS.big, 't.me/p_by_p', 4, y, W); y += 12;
+drawText(art, FONTS.big, 'ДЕДЛАЙН 06:00', 4, y, Y); y += 12;
+drawText(art, FONTS.big, 'V2 · 08:00 100%', 4, y, Y); y += 12;
+const img = light(art, { ambient: [1, 1, 1] });
+const out = shoot(img, 320, 180, { x: 160, y: 90, zoom: 1 }, 1920, 1080);
+writePNG(process.argv[2] || 'out/dev_font.png', 1920, 1080, out);
+const out2 = shoot(img, 320, 180, { x: 80, y: 45, zoom: 2 }, 1920, 1080);
+writePNG((process.argv[2] || 'out/dev_font.png').replace('.png', '_z2.png'), 1920, 1080, out2);
